@@ -31,6 +31,6 @@ echo "--- :k8s: Creating Cluster - ${CLUSTER_NAME}"
 kind create cluster --name ${CLUSTER_NAME} --image ${IMAGE} ${KIND_CONFIG:-} --wait 2m
 
 echo "--- :k8s: Setting Kubeconfig"
-kind export kubeconfig --name ${CLUSTER_NAME} --kubeconfig ./kubeconfig-${CLUSTER_NAME}
-export KUBECONFIG=$(pwd)/kubeconfig-${CLUSTER_NAME}
+kind export kubeconfig --name ${CLUSTER_NAME} --kubeconfig ${KUBECONFIG_PATH}
+export KUBECONFIG=${KUBECONFIG_PATH}
 

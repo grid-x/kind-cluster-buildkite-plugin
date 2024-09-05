@@ -18,7 +18,7 @@ steps:
   - label: ":k8s: Get Pods"
     command: "kubectl get pods"
     plugins:
-    - ssh://git@github.com/equinixmetal-buildkite/kind-cluster-buildkite-plugin#v0.2.0:
+    - ssh://git@github.com/grid-x/kind-cluster-buildkite-plugin#v0.2.0:
         k8s_version: "1.29"
         config_path: ./config/my-config.yml
 ```
