@@ -31,20 +31,18 @@ echo "--- :k8s: Node Image: ${IMAGE}"
 if [ ! -z ${BUILDKITE_PLUGIN_KIND_CLUSTER_CONFIG_PATH:-} ]; then
 	echo "--- :k8s: Setting KinD Config Path"
 	export CONFIG=" --config ${BUILDKITE_PLUGIN_KIND_CLUSTER_CONFIG_PATH} "
+	echo "--- :k8s: kind config path: ${CONFIG}"
 fi
-echo "--- :k8s: kind config path: ${CONFIG}"
 
+export CLUSTER_NAME=buildkite-${BUILDKITE_STEP_ID:-000}
 if [ ! -z ${BUILDKITE_PLUGIN_KIND_CLUSTER_CLUSTER_NAME:-} ]; then
 	export CLUSTER_NAME=${BUILDKITE_PLUGIN_KIND_CLUSTER_CLUSTER_NAME}
-else
-	export CLUSTER_NAME=buildkite-${BUILDKITE_STEP_ID:-000}
 fi
 echo "--- :k8s: Cluster Name: ${CLUSTER_NAME}"
 
+export KUBECONFIG_PATH=$(pwd)/kubeconfig-${CLUSTER_NAME}
 if [ ! -z ${BUILDKITE_PLUGIN_KIND_CLUSTER_KUBECONFIG_PATH:-} ]; then
 	export KUBECONFIG_PATH=${BUILDKITE_PLUGIN_KIND_CLUSTER_KUBECONFIG_PATH}
-else
-	export KUBECONFIG_PATH=$(pwd)/kubeconfig-${CLUSTER_NAME}
 fi
 echo "--- :k8s: Kubeconfig Path: ${KUBECONFIG_PATH}"
 
