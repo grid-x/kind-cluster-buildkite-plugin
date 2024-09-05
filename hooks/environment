@@ -6,8 +6,6 @@ else
 	set -eu
 fi
 
-echo "--- :k8s: Determining Node Image"
-
 if [ ! -z ${BUILDKITE_PLUGIN_KIND_CLUSTER_CUSTOM_IMAGE:-} ]; then
 	export IMAGE=${BUILDKITE_PLUGIN_KIND_CLUSTER_CUSTOM_IMAGE}
 else
@@ -27,27 +25,28 @@ else
 		exit 1
 		;;
         esac
-
 fi
+echo "--- :k8s: Node Image: ${IMAGE}"
 
 if [ ! -z ${BUILDKITE_PLUGIN_KIND_CLUSTER_CONFIG_PATH:-} ]; then
 	echo "--- :k8s: Setting KinD Config Path"
 	export CONFIG=" --config ${BUILDKITE_PLUGIN_KIND_CLUSTER_CONFIG_PATH} "
 fi
+echo "--- :k8s: kind config path: ${CONFIG}"
 
-echo "--- :k8s: Setting Cluster Name"
 if [ ! -z ${BUILDKITE_PLUGIN_KIND_CLUSTER_CLUSTER_NAME:-} ]; then
 	export CLUSTER_NAME=${BUILDKITE_PLUGIN_KIND_CLUSTER_CLUSTER_NAME}
 else
 	export CLUSTER_NAME=buildkite-${BUILDKITE_STEP_ID:-000}
 fi
+echo "--- :k8s: Cluster Name: ${CLUSTER_NAME}"
 
-echo "-- :k8s: Setting kubeconfig Path"
 if [ ! -z ${BUILDKITE_PLUGIN_KIND_CLUSTER_KUBECONFIG_PATH:-} ]; then
 	export KUBECONFIG_PATH=${BUILDKITE_PLUGIN_KIND_CLUSTER_KUBECONFIG_PATH}
 else
 	export KUBECONFIG_PATH=$(pwd)/kubeconfig-${CLUSTER_NAME}
 fi
+echo "--- :k8s: Kubeconfig Path: ${KUBECONFIG_PATH}"
 
 echo "--- :bash: Setting local bin path"
 export LOCAL_BIN=~/.local/bin
